@@ -1,0 +1,20 @@
+---
+  - hosts: myserver
+    become: true
+    tasks:
+      - name: install docker python module
+        pip:
+          name: docker
+      - name: building and pushing docker image
+        docker_image: 
+          build: 
+            path: .
+          name: maurice94/nginx
+          tag: v1
+          force_source: yes
+          push: yes
+          source: build
+        delegate_to: 127.0.0.1
+            
+
+        

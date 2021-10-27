@@ -1,0 +1,19 @@
+
+
+---
+  - name: Playbook
+    hosts: myserver
+    become: true
+    become_user: root
+    tasks:
+      - name: ensure apache is at the latest version
+        apt:
+          name: apache2          
+          state: latest
+      - name: enabling mod_rewrite
+        apache2_module: name=rewrite state=present    
+        notify:
+          - restart apache2
+    handlers:
+      - name: restart apache2
+        service: name=apache2 state=restarted      
